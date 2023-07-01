@@ -4,16 +4,18 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>1428c054-f55f-4205-9c15-fbf54a55cc1e</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.16" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Ps.Ecomm.DataAccess\Ps.Ecomm.DataAccess.csproj" />
     <ProjectReference Include="..\Ps.Ecomm.Models\Ps.Ecomm.Models.csproj" />
-    <ProjectReference Include="..\Ps.Ecomm.PlaneRabbitMQ\Ps.Ecomm.PlaneRabbitMQ.csproj" />
   </ItemGroup>
 
 </Project>
