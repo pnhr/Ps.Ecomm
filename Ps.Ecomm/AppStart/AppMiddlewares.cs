@@ -8,7 +8,9 @@ namespace Ps.Ecomm.AppStart
         {
             // Configure the HTTP request pipeline.
             app.UseSwagger();
-            app.UseSwaggerUI(c => {
+            app.UseSwaggerUI(c =>
+            {
+                c.DocumentTitle = "Swagger UI | PS ECOMM";
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ps Ecomm Service");
             });
 
