@@ -2,6 +2,6 @@
 {
     public interface IInventoryUpdator
     {
-        Task Update(int productId, int quantity);
+        Task UpdateAsync(int productId, int quantity);
     }
 }

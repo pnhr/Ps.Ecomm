@@ -26,19 +26,24 @@ namespace Ps.Ecomm.AppStart
             var connectionString = config.GetConnectionString("AppDb");
             var rabbitMqConnStr = config.GetConnectionString("RabbitMqConnStr");
 
+            services.AddSingleton<IOrderDetailsProvider, OrderDetailsProvider>();
             services.AddSingleton<IProductProvider>(new ProductProvider(connectionString));
+            services.AddSingleton<IInventoryProvider>(new InventoryProvider(connectionString));
+            services.AddSingleton<IInventoryUpdator>(new InventoryUpdator(connectionString));
+
             services.AddMassTransit(config =>
             {
+                config.AddConsumer<OrderCreatedConsumer>();
+
                 config.UsingRabbitMq((ctx, cfg) =>
                 {
                     cfg.Host(rabbitMqConnStr);
+                    cfg.ReceiveEndpoint("order-response", c =>
+                    {
+                        c.ConfigureConsumer<OrderCreatedConsumer>(ctx);
+                    });
                 });
             });
-            //services.AddSingleton<IConnectionProvider>(new ConnectionProvider(rabbitMqConnStr));
-            //services.AddScoped<IPublisher>(x => new Publisher(x.GetService<IConnectionProvider>(),
-            //                                                    MQConstants.EXCHANGE_REPORT,
-            //                                                    ExchangeType.Topic));
-
             services.AddHostedService<OrderCreatedListener>();
         }
     }

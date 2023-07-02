@@ -17,10 +17,13 @@ namespace Ps.Ecomm.DataAccess.Definition
             this.connectionString = connectionString;
         }
 
-        public async Task Update(int productId, int quantity)
+        public async Task UpdateAsync(int productId, int quantity)
         {
             using var connection = new SqlConnection(connectionString);
-            await connection.ExecuteAsync("UPDATE_INVENTORY", new { productId, quantity }, commandType: System.Data.CommandType.StoredProcedure);
+            connection.Open();
+            await connection.ExecuteAsync("uspUpdateInventory", 
+                                            new { productId, quantity }, 
+                                            commandType: System.Data.CommandType.StoredProcedure);
         }
     }
 }
